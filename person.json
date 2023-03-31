@@ -1,0 +1,10 @@
+[
+  { "id": 8, "age": 30, "eyeColor": "green", "name": "Clements Griffith" },
+  { "id": 1, "age": 30, "eyeColor": "green", "name": "Carney Hoffman" },
+  { "id": 5, "age": 40, "eyeColor": "brown", "name": "Bond Dean" },
+  { "id": 7, "age": 21, "eyeColor": "brown", "name": "Dickerson Fox" },
+  { "id": 5, "age": 35, "eyeColor": "blue", "name": "Richmond Byers" },
+  { "id": 14, "name": "Rati", "age": "20" },
+  { "id": 15, "name": "Riza", "age": "21" },
+  { "id": 16, "name": "ory", "age": "21" }
+]
