@@ -48,6 +48,7 @@ app.get('/person/:id', (req, res) => {
     const id = req.params.id * 1;
     const person = persons.find(el => el.id === id);
     
+    // jika person/:id yang diminta tidak ada di person.json maka akan menampilkan validasi sbg berikut:
     if (!person) {
         res.status(400).json({
             status: 'failed',
@@ -82,11 +83,11 @@ app.delete('/person/:id', (req, res) => {
     const index = persons.findIndex(element => element.id === id);
     const person = persons.find(el => el.id === id);
 
-
+// Jika person/:id yang diminta tidak ada di person.json maka akan menampilkan validasi sbg berikut dengan status failed
     if (!person) {
         res.status(400).json({
             status: 'failed',
-            message: `person dengan id ${id} tersebut invalid/gak ada`
+            message: `person dengan id ${id} tersebut invalid/tidak ada`
         })
     }
     if (index !== -1) {
@@ -112,24 +113,28 @@ app.post('/person', (req, res) => {
     const newId = persons.length - 1 + 10;
     const newPerson = Object.assign({ id: newId }, req.body)
 
-    // validasi kalau name nya udah ada, maka gak bisa create data baru
+    // validasi kalau name nya udah ada, maka tidak bisa create data baru
     const personName = persons.find(el => el.name === req.body.name);
     // console.log(personName)
     const lengthName = req.body.name.length < 3
     const cukupUmur = req.body.age < 20
 
+    // validasi jika panjang huruf kurang dari 3 karakter, maka tidak bisa membuat data baru
     if (lengthName) {
         res.status(400).json({
             status: 'failed',
             message: `panjang huruf ${req.body.name} kurang dari 3 karakter`
         })
     }
+    // validasi jika nama sudah ada, maka akan berstatus failed dan tidak bisa membuat data baru
     else if (personName) {
         res.status(400).json({
             status: 'failed',
             message: `name ${req.body.name} already exist`
         })
-    } else if (cukupUmur) {
+    } 
+    // validasi jika belum cukup umur, maka akan berstatus failed dan tidak membuat data baru
+    else if (cukupUmur) {
         res.status(400).json({
             status: 'failed',
             message: `name ${req.body.name} belum cukup umur`
@@ -164,12 +169,15 @@ app.put('/person/:id', (req, res) => {
         `${__dirname}/person.json`,
         JSON.stringify(persons),
         errr => {
+            // validasi jika umur belum cukup maka akan menampilkan status failed, dan tidak dapat mengedit data
             if (cukupUmur) {
                 res.status(400).json({
                     status: 'failed',
                     message: `umur ${req.body.age} belum cukup`
                 })
-            } else {
+            } 
+            // validasi jika data berhasil diubah, maka akan menunjukkan status success dan data berhasil di ubah
+            else {
                 res.status(200).json({
                     status: 'success',
                     message: `data dari id ${id} nya berhasil diubah`,
@@ -177,7 +185,9 @@ app.put('/person/:id', (req, res) => {
                 })
             }
         })
-    } else {
+    } 
+    // validasi jika person/:id nya tidak ditemukan maka akan menunjukkan status failed, dan tidak bisa mengubah data
+    else {
       res.status(404).json({
         status: 'fail',
         message: `Data dengan id ${id} tidak ditemukan`
